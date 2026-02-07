@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>موقع مؤمن الشخصي</title>
+<title>موقع مانو الشخصي</title>
 <style>
   /* ========== Reset & Base ========== */
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial', sans-serif; }
-  html, body { height: 100%; overflow-x: hidden; scroll-behavior: smooth; }
+  html, body { height: 100%; overflow-x: hidden; scroll-behavior: smooth; user-select: none; }
 
-  /* ========== Animated Gradient Background ========== */
+  /* ========== Prevent Copying ========= */
   body {
     background: linear-gradient(-45deg, #ff6ec4, #7873f5, #42e695, #ffcc70);
     background-size: 400% 400%;
@@ -139,7 +139,7 @@
   }
 </style>
 </head>
-<body>
+<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
 
 <!-- Stars Canvas -->
 <canvas id="stars"></canvas>
@@ -147,15 +147,15 @@
 <div class="container">
   <!-- Header -->
   <header>
-    <img src="m1.jpg" alt="صورة مؤمن" class="scroll-element">
-    <h1 class="scroll-element">مؤمن ياسر</h1>
+    <img src="m1.jpg" alt="صورة مانو" class="scroll-element">
+    <h1 class="scroll-element">𝙀𝙉𝙂 : 𝑴𝒎𝑨𝒂𝑵𝒏𝑶𝒐</h1>
     <p class="scroll-element">مطور ويب | مصمم مواقع شخصية جذابة</p>
   </header>
 
   <!-- About -->
   <section class="about">
     <h2 class="scroll-element">عنّي</h2>
-    <p class="scroll-element">مرحباً! أنا مؤمن ياسر، أحب تصميم وتطوير المواقع البسيطة والجذابة باستخدام HTML وCSS. أهدف لإنشاء مواقع تنبض بالحياة وتظهر شخصيتي بشكل احترافي.</p>
+    <p class="scroll-element">مرحباً! أنا مانـو ، أحب تصميم وتطوير المواقع البسيطة والجذابة باستخدام HTML وCSS. أهدف لإنشاء مواقع تنبض بالحياة وتظهر شخصيتي بشكل احترافي.</p>
   </section>
 
   <!-- Social Links -->
