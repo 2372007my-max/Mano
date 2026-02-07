@@ -7,9 +7,9 @@
 <style>
   /* ========== Reset & Base ========== */
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Arial', sans-serif; }
-  body, html { height: 100%; scroll-behavior: smooth; }
+  html, body { height: 100%; overflow-x: hidden; scroll-behavior: smooth; }
 
-  /* ========== Animated Background ========== */
+  /* ========== Animated Gradient Background ========== */
   body {
     background: linear-gradient(-45deg, #ff6ec4, #7873f5, #42e695, #ffcc70);
     background-size: 400% 400%;
@@ -18,11 +18,22 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: relative;
   }
   @keyframes gradientBG {
     0% {background-position: 0% 50%;}
     50% {background-position: 100% 50%;}
     100% {background-position: 0% 50%;}
+  }
+
+  /* ========== Stars Background ========== */
+  canvas#stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
   }
 
   /* ========== Container ========== */
@@ -34,6 +45,8 @@
     max-width: 800px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 1;
+    position: relative;
   }
 
   /* ========== Header ========== */
@@ -128,10 +141,13 @@
 </head>
 <body>
 
+<!-- Stars Canvas -->
+<canvas id="stars"></canvas>
+
 <div class="container">
   <!-- Header -->
   <header>
-    <img src="https://via.placeholder.com/150" alt="صورة مؤمن" class="scroll-element">
+    <img src="m1.jpg" alt="صورة مؤمن" class="scroll-element">
     <h1 class="scroll-element">مؤمن ياسر</h1>
     <p class="scroll-element">مطور ويب | مصمم مواقع شخصية جذابة</p>
   </header>
@@ -144,42 +160,56 @@
 
   <!-- Social Links -->
   <div class="social scroll-element">
-    <a href="#">فيسبوك</a>
-    <a href="#">إنستجرام</a>
-    <a href="#">لينكدإن</a>
+    <a href="https://wa.me/201007493757" target="_blank">واتساب ✨</a>
+    <a href="https://t.me/Mano2_00_7" target="_blank">تليجرام ✨</a>
+    <a href="https://www.youtube.com/@Mano_El_kbeer123" target="_blank">يوتيوب ✨</a>
   </div>
 </div>
 
 <script>
   // ===== Scroll Animation =====
   const scrollElements = document.querySelectorAll(".scroll-element");
+  const elementInView = (el, offset = 100) => el.getBoundingClientRect().top <= (window.innerHeight - offset);
+  const displayScrollElement = el => el.classList.add("show");
+  const hideScrollElement = el => el.classList.remove("show");
+  const handleScrollAnimation = () => scrollElements.forEach(el => elementInView(el, 100) ? displayScrollElement(el) : hideScrollElement(el));
+  window.addEventListener("scroll", handleScrollAnimation);
+  window.addEventListener("load", handleScrollAnimation);
 
-  const elementInView = (el, offset = 100) => {
-    const elementTop = el.getBoundingClientRect().top;
-    return elementTop <= (window.innerHeight - offset);
-  };
+  // ===== Stars Animation =====
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
 
-  const displayScrollElement = (element) => {
-    element.classList.add("show");
-  };
+  window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
 
-  const hideScrollElement = (element) => {
-    element.classList.remove("show");
-  };
-
-  const handleScrollAnimation = () => {
-    scrollElements.forEach(el => {
-      if(elementInView(el, 100)) {
-        displayScrollElement(el);
-      } else {
-        hideScrollElement(el);
-      }
+  const numStars = 150;
+  const stars = [];
+  for(let i=0;i<numStars;i++){
+    stars.push({
+      x: Math.random()*width,
+      y: Math.random()*height,
+      radius: Math.random()*1.5,
+      alpha: Math.random()
     });
   }
 
-  window.addEventListener("scroll", handleScrollAnimation);
-  window.addEventListener("load", handleScrollAnimation);
+  function animateStars(){
+    ctx.clearRect(0,0,width,height);
+    stars.forEach(s=>{
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+      ctx.fill();
+      s.alpha += (Math.random()-0.5)*0.02;
+      if(s.alpha<0) s.alpha=0;
+      if(s.alpha>1) s.alpha=1;
+    });
+    requestAnimationFrame(animateStars);
+  }
+  animateStars();
 </script>
 
 </body>
-  </html>
+</html>
