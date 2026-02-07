@@ -1,202 +1,138 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!DOCTYPE html><html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>موقع مؤمن الشخصي</title>
+<title>Portfolio | مؤمن ياسر</title><style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{color:white;background:linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#000000);background-size:400% 400%;animation:bg 12s ease infinite;overflow-x:hidden}
+@keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-html{scroll-behavior:smooth;}
-body{transition:.5s;user-select:none}
+nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;padding:15px 30px;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);z-index:5}
+nav a{color:white;text-decoration:none;margin:0 10px;transition:.3s}
+nav a:hover{color:#00ffe7}
 
-/* THEMES */
-body.light{
-background:linear-gradient(-45deg,#ff6ec4,#7873f5,#42e695,#ffcc70);
-background-size:400% 400%;
-animation:gradientBG 15s ease infinite;
-color:#fff;
-}
-body.dark{background:#0b0f19;color:#e6edf3;}
+section{padding:100px 20px;text-align:center}
 
-@keyframes gradientBG{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-}
+.hero img{width:130px;border-radius:50%;margin:20px auto;display:block;border:3px solid #00ffe7}
 
-/* STARS */
-#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
+button{padding:10px 18px;border:none;border-radius:10px;background:#00ffe7;color:#000;font-weight:bold;cursor:pointer;transition:.3s}
+button:hover{transform:scale(1.05)}
 
-/* NAV */
-nav{
-position:fixed;top:0;width:100%;
-display:flex;justify-content:center;gap:20px;
-padding:15px;backdrop-filter:blur(10px);
-}
-body.light nav{background:rgba(255,255,255,.2);}
-body.dark nav{background:rgba(0,0,0,.4);}
-nav a{color:white;text-decoration:none;padding:8px 18px;border-radius:20px;transition:.3s}
-nav a:hover{background:white;color:#333;transform:scale(1.1)}
+.projects{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;margin-top:30px}
+.card{background:rgba(255,255,255,.08);padding:15px;border-radius:14px;width:260px;cursor:pointer;transition:.3s}
+.card:hover{transform:translateY(-8px)}
 
-/* CONTAINER */
-.container{
-margin-top:100px;
-max-width:1000px;
-margin-inline:auto;
-padding:40px;
-border-radius:20px;
-backdrop-filter:blur(15px);
-text-align:center;
-}
-body.light .container{background:rgba(255,255,255,.1);}
-body.dark .container{background:rgba(255,255,255,.05);}
+.img-box{position:relative;overflow:hidden;border-radius:10px}
+.img-box img{width:100%;display:block;transition:.4s}
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.3s}
+.img-box:hover img{transform:scale(1.1);filter:blur(2px)}
+.img-box:hover .overlay{opacity:1}
 
-/* HEADER */
-header img{width:150px;height:150px;border-radius:50%;border:3px solid #fff;margin-bottom:20px}
-header h1{font-size:3rem;margin-bottom:10px}
+footer{padding:30px;text-align:center;background:rgba(0,0,0,.4)}
 
-/* SOCIAL */
-.social a{
-display:inline-block;margin:10px;padding:12px 20px;border-radius:30px;
-text-decoration:none;font-weight:bold;transition:.3s;
-}
-body.light .social a{background:rgba(255,255,255,.3);color:#fff;}
-body.dark .social a{background:#161b22;color:#e6edf3;}
-.social a:hover{background:white;color:#333;transform:scale(1.15);box-shadow:0 0 20px rgba(255,255,255,.6)}
-.social a:active{transform:scale(.95)}
+.popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);justify-content:center;align-items:center}
+.popup-content{background:#111;padding:20px;border-radius:14px;width:300px}
+.popup-content img{width:100%;border-radius:10px;margin-bottom:10px}
 
-/* PROJECTS */
-.projects{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-margin-top:30px;
-}
+.stars{position:fixed;inset:0;z-index:-1}
+.star{position:absolute;width:2px;height:2px;background:white;animation:twinkle 3s infinite}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
 
-.card{
-border-radius:15px;
-padding:20px;
-transition:.3s;
-cursor:pointer;
-text-align:right;
-}
+/* Scroll Reveal Animation */
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s ease}
+.reveal.active{opacity:1;transform:translateY(0)}
 
-body.light .card{background:rgba(255,255,255,.2);}
-body.dark .card{background:#161b22;}
-
-.card:hover{
-transform:translateY(-8px) scale(1.03);
-box-shadow:0 10px 25px rgba(0,0,0,.3);
-}
-
-.card h3{margin-bottom:10px}
-.card p{font-size:.95rem}
-
-/* THEME BUTTON */
-.theme-btn{
-position:fixed;bottom:20px;right:20px;
-padding:12px 18px;border-radius:30px;cursor:pointer;font-weight:bold;
-}
-body.light .theme-btn{background:rgba(255,255,255,.3);color:white;}
-body.dark .theme-btn{background:#161b22;color:#e6edf3;}
-.theme-btn:hover{background:white;color:#333;transform:scale(1.1)}
-
-section{margin-top:40px}
-</style>
-</head>
-
-<body class="light">
-
-<canvas id="stars"></canvas>
-
-<nav>
+</style></head><body oncontextmenu="return false"><div class="stars" id="stars"></div><nav>
+<div>Portfolio</div>
+<div>
 <a href="#home">الرئيسية</a>
-<a href="#about">عنّي</a>
-<a href="#projects">مشاريعي</a>
+<a href="#about">عني</a>
+<a href="#projects">المشاريع</a>
 <a href="#contact">تواصل</a>
-</nav>
-
-<div class="container" id="home">
-
-<header>
-<img src="m1.jpg">
+</div>
+</nav><section id="home" class="hero">
 <h1>مؤمن ياسر</h1>
-<p>مطور ويب | مصمم مواقع شخصية جذابة</p>
-</header>
-
-<section id="about">
-<h2>عنّي</h2>
-<p>أحب تصميم المواقع التفاعلية والحديثة باستخدام HTML وCSS.</p>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-<h2>مشاريعي</h2>
-
-<div class="projects">
-
-<div class="card">
-<h3>موقع تهنئة رمضان</h3>
-<p>موقع احتفالي يحتوي على تأثيرات نجوم وفوانيس متحركة.</p>
+<img src="m1.jpg">
+<p>Frontend Developer</p>
+<button onclick="toggleTheme()">تغيير الثيم</button>
+</section><section id="about" class="reveal">
+<h2>عني</h2>
+<p>أنا مطور مواقع مهتم بتصميم واجهات جذابة باستخدام HTML و CSS.</p>
+</section><section id="projects" class="reveal">
+<h2>مشاريعي</h2><div style="margin:20px">
+<button onclick="filterProjects('all')">الكل</button>
+<button onclick="filterProjects('web')">مواقع</button>
+<button onclick="filterProjects('design')">تصميم</button>
+</div><div class="projects"><div class="card" data-type="web" onclick="openPopup('موقع رمضان','project1.jpg','موقع احتفالي')">
+<div class="img-box"><img src="project1.jpg"><div class="overlay">عرض</div></div>
+<h3>موقع رمضان</h3>
+</div><div class="card" data-type="design" onclick="openPopup('موقع عيد ميلاد','project2.jpg','تصميم احتفالي')">
+<div class="img-box"><img src="project2.jpg"><div class="overlay">عرض</div></div>
+<h3>عيد ميلاد</h3>
+</div></div>
+</section><section id="contact">
+<h2>تواصل</h2>
+<p>WhatsApp / Telegram / YouTube</p>
+<p>
+<a href="https://wa.me/201007493757">WhatsApp</a> |
+<a href="https://t.me/Mano2_00_7">Telegram</a> |
+<a href="https://www.youtube.com/@Mano_El_kbeer123">YouTube</a>
+</p>
+</section><footer>
+© 2026 مؤمن ياسر
+</footer><div id="popup" class="popup" onclick="closePopup()">
+<div class="popup-content">
+<img id="popupImg">
+<h3 id="popupTitle"></h3>
+<p id="popupDesc"></p>
 </div>
+</div><script>
+document.addEventListener('copy',e=>e.preventDefault());
 
-<div class="card">
-<h3>موقع عيد ميلاد</h3>
-<p>صفحة احتفالية بتصميم جذاب وتأثيرات بصرية.</p>
-</div>
-
-<div class="card">
-<h3>موقعي الشخصي</h3>
-<p>موقع Portfolio بسيط يعرض معلوماتي وروابط التواصل.</p>
-</div>
-
-</div>
-</section>
-
-<div class="social">
-<a href="https://wa.me/201007493757" target="_blank">واتساب ✨</a>
-<a href="https://t.me/Mano2_00_7" target="_blank">تليجرام ✨</a>
-<a href="https://www.youtube.com/@Mano_El_kbeer123" target="_blank">يوتيوب ✨</a>
-</div>
-
-<section id="contact">
-<h2>تواصل معي</h2>
-<p>يمكنك التواصل عبر الروابط بالأعلى.</p>
-</section>
-
-</div>
-
-<div class="theme-btn" id="themeToggle">تغيير الثيم</div>
-
-<script>
-/* THEME */
-document.getElementById("themeToggle").onclick=()=>{
-document.body.classList.toggle("dark");
-document.body.classList.toggle("light");
-};
-
-/* STARS */
-const c=document.getElementById("stars");
-const x=c.getContext("2d");
-let w=c.width=innerWidth,h=c.height=innerHeight;
-addEventListener("resize",()=>{w=c.width=innerWidth;h=c.height=innerHeight});
-const s=[];
-for(let i=0;i<120;i++){s.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5,a:Math.random()})}
-function d(){
-x.clearRect(0,0,w,h);
-s.forEach(t=>{
-x.beginPath();
-x.arc(t.x,t.y,t.r,0,Math.PI*2);
-x.fillStyle=`rgba(255,255,255,${t.a})`;
-x.fill();
-t.a+=(Math.random()-.5)*.02;
-t.a=Math.max(0,Math.min(1,t.a));
-});
-requestAnimationFrame(d);
+function toggleTheme(){
+document.body.classList.toggle('dark');
+if(document.body.classList.contains('dark')){
+document.body.style.background='#0a0a0a';
+}else{
+document.body.style.background='';
 }
-d();
-</script>
+}
 
-</body>
+function openPopup(t,i,d){
+popup.style.display='flex';
+popupTitle.innerText=t;
+popupImg.src=i;
+popupDesc.innerText=d;
+}
+function closePopup(){popup.style.display='none'}
+
+function filterProjects(type){
+document.querySelectorAll('.card').forEach(card=>{
+card.style.display=(type==='all'||card.dataset.type===type)?'block':'none';
+});
+}
+
+for(let i=0;i<80;i++){
+let s=document.createElement('div');
+s.className='star';
+s.style.top=Math.random()*100+'%';
+s.style.left=Math.random()*100+'%';
+s.style.animationDuration=(2+Math.random()*3)+'s';
+stars.appendChild(s);
+}
+</script><script>
+// Scroll reveal animation
+const reveals=document.querySelectorAll('.reveal');
+function revealOnScroll(){
+  const windowHeight=window.innerHeight;
+  reveals.forEach(el=>{
+    const top=el.getBoundingClientRect().top;
+    if(top<windowHeight-80){
+      el.classList.add('active');
+    }
+  });
+}
+window.addEventListener('scroll',revealOnScroll);
+window.addEventListener('load',revealOnScroll);
+</script></body>
 </html>
